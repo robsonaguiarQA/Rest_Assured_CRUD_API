@@ -1,4 +1,3 @@
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Test;
 
@@ -13,17 +12,16 @@ public class Put_Update_Test extends BaseTest {
                 "    \"name\": \"morpheus\",\n" +
                 "    \"job\": \"zion resident\"\n" +
                 "}";
-        Response response = given()
-                .header("x-api-key", "reqres-free-v1")
-                .header("Content-Type", "application/json")
-                .body(body)
-                .when()
-                .put(Endpoints.ATUALIZAR_USUARIO)
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .body(body)
+                        .when()
+                        .put(Endpoints.ATUALIZAR_USUARIO)
+                        .then()
+                        .statusCode(200)
+                        .log().all()
+                        .extract()
+                        .response();
         assertEquals("morpheus", response.jsonPath().getString("name"));
         assertEquals("zion resident", response.jsonPath().getString("job"));
     }
@@ -33,17 +31,16 @@ public class Put_Update_Test extends BaseTest {
         String body = "{\n" +
                 "    \"job\": \"zion resident\"\n" +
                 "}";
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .body(body)
-                .when()
-                .patch(Endpoints.ATUALIZAR_USUARIO)
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .body(body)
+                        .when()
+                        .patch(Endpoints.ATUALIZAR_USUARIO)
+                        .then()
+                        .statusCode(200)
+                        .log().all()
+                        .extract()
+                        .response();
         String updatedAt = response.jsonPath().getString("updatedAt");
         assertEquals(true, updatedAt != null && !updatedAt.isEmpty());
     }

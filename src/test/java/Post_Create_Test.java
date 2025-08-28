@@ -1,7 +1,7 @@
 import io.restassured.response.Response;
-import io.restassured.RestAssured;
 import org.junit.Test;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 
@@ -13,22 +13,20 @@ public class Post_Create_Test extends BaseTest {
                 "    \"name\": \"morpheus\",\n" +
                 "    \"job\": \"leader\"\n" +
                 "}";
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .contentType("application/json")
-                .body(corpo)
-                .when()
-                .post(Endpoints.REGISTRANDO_USUARIO)
-                .then()
-                .statusCode(201)
-                .body("name", equalTo("morpheus"))
-                .body("job", equalTo("leader"))
-                .body("id", notNullValue())
-                .body("createdAt", notNullValue())
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .body(corpo)
+                        .when()
+                        .post(Endpoints.REGISTRANDO_USUARIO)
+                        .then()
+                        .statusCode(201)
+                        .body("name", equalTo("morpheus"))
+                        .body("job", equalTo("leader"))
+                        .body("id", notNullValue())
+                        .body("createdAt", notNullValue())
+                        .log().all()
+                        .extract()
+                        .response();
         assertEquals("morpheus", response.jsonPath().getString("name"));
         assertEquals("leader", response.jsonPath().getString("job"));
     }

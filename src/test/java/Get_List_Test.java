@@ -1,7 +1,7 @@
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Test;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 
@@ -9,16 +9,15 @@ public class Get_List_Test extends BaseTest {
 
     @Test
     public void deve_Listar_Todos_Usuarios() {
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .when()
-                .get(Endpoints.TODOS_USUARIO) // endpoint
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .when()
+                        .get(Endpoints.TODOS_USUARIO) // endpoint
+                        .then()
+                        .statusCode(200)
+                        .log().all()
+                        .extract()
+                        .response();
         int qtdUsuarios = response.jsonPath().getList("data").size();
         assertEquals("Quantidade de usuários diferente de 6!", 6, qtdUsuarios);
         assertEquals("michael.lawson@reqres.in", response.jsonPath().getString("data[0].email"));
@@ -26,41 +25,37 @@ public class Get_List_Test extends BaseTest {
 
     @Test
     public void deve_Listar_Usuario_Especifico_Id() {
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .when()
-                .get(Endpoints.USUARIO_ID)
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .when()
+                        .get(Endpoints.USUARIO_ID)
+                        .then()
+                        .statusCode(200)
+                        .log().all()
+                        .extract()
+                        .response();
         String email = response.jsonPath().getString("data.email");
         assertEquals("Email incorreto!", "janet.weaver@reqres.in", email);
     }
 
     @Test
     public void deve_Listar_Usuario_Inexistente() {
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .when()
-                .get(Endpoints.USUARIO_INEXISTENTE)
-                .then()
-                .statusCode(404)
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .when()
+                        .get(Endpoints.USUARIO_INEXISTENTE)
+                        .then()
+                        .statusCode(404)
+                        .log().all()
+                        .extract()
+                        .response();
         String body = response.getBody().asString();
         assertEquals("{}", body);
     }
 
     @Test
     public void deve_Listar_Recursos() {
-        RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
+        given()
                 .when()
                 .get(Endpoints.RECURSOS)
                 .then()
@@ -76,9 +71,7 @@ public class Get_List_Test extends BaseTest {
 
     @Test
     public void deve_Listar_Recursos_Especifico() {
-        RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
+        given()
                 .when()
                 .get(Endpoints.RECURSO_ID)
                 .then()

@@ -1,7 +1,7 @@
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Test;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
@@ -15,10 +15,7 @@ public class Register_Login_Test extends BaseTest {
                 "    \"email\": \"eve.holt@reqres.in\",\n" +
                 "    \"password\": \"pistol\"\n" +
                 "}";
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .contentType("application/json")
+        Response response = given()
                 .body(corpo)
                 .when()
                 .post(Endpoints.REGISTRO_SUCESSO)
@@ -38,19 +35,17 @@ public class Register_Login_Test extends BaseTest {
         String corpo = "{\n" +
                 "    \"email\": \"sydney@fife\"\n" +
                 "}";
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .contentType("application/json")
-                .body(corpo)
-                .when()
-                .post(Endpoints.REGISTRO_INVALIDO)
-                .then()
-                .statusCode(400)
-                .body("error", equalTo("Missing password"))
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .body(corpo)
+                        .when()
+                        .post(Endpoints.REGISTRO_INVALIDO)
+                        .then()
+                        .statusCode(400)
+                        .body("error", equalTo("Missing password"))
+                        .log().all()
+                        .extract()
+                        .response();
         assertEquals("Missing password", response.jsonPath().getString("error"));
     }
 
@@ -60,19 +55,17 @@ public class Register_Login_Test extends BaseTest {
                 "    \"email\": \"eve.holt@reqres.in\",\n" +
                 "    \"password\": \"cityslicka\"\n" +
                 "}";
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .contentType("application/json")
-                .body(corpo)
-                .when()
-                .post(Endpoints.LOGIN)
-                .then()
-                .statusCode(200)
-                .body("token", notNullValue())
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .body(corpo)
+                        .when()
+                        .post(Endpoints.LOGIN)
+                        .then()
+                        .statusCode(200)
+                        .body("token", notNullValue())
+                        .log().all()
+                        .extract()
+                        .response();
         assertNotNull(response.jsonPath().getString("token"), "Token não deveria ser nulo");
     }
 
@@ -81,19 +74,17 @@ public class Register_Login_Test extends BaseTest {
         String corpo = "{\n" +
                 "    \"email\": \"peter@klaven\"\n" +
                 "}";
-        Response response = RestAssured
-                .given()
-                .header("x-api-key", "reqres-free-v1")
-                .contentType("application/json")
-                .body(corpo)
-                .when()
-                .post(Endpoints.LOGIN)
-                .then()
-                .statusCode(400)
-                .body("error", equalTo("Missing password"))
-                .log().all()
-                .extract()
-                .response();
+        Response response =
+                given()
+                        .body(corpo)
+                        .when()
+                        .post(Endpoints.LOGIN)
+                        .then()
+                        .statusCode(400)
+                        .body("error", equalTo("Missing password"))
+                        .log().all()
+                        .extract()
+                        .response();
         assertEquals("Missing password", response.jsonPath().getString("error"));
     }
 }
