@@ -1,0 +1,14 @@
+
+public class Endpoints {
+    // Usuários
+    public static final String TODOS_USUARIO = "api/users?page=2";
+    public static final String USUARIO_ID = "/api/users/2";
+    public static final String USUARIO_INEXISTENTE = "/api/users/23";
+    // Recursos
+    public static final String RECURSOS = "/api/unknown";
+    public static final String RECURSO_ID = "/api/unknown/2";
+    // Outros endpoints
+    public static final String HEALTH = "/health";
+    public static final String ATUALIZAR_USUARIO = "/api/users/2";
+    public static final String DELETA_USUARIO = "/api/users/2";
+}
