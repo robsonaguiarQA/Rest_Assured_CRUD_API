@@ -19,7 +19,7 @@ public class Post_Create_Test extends BaseTest {
                 .contentType("application/json")
                 .body(corpo)
                 .when()
-                .post("/api/user") // endpoint de criação
+                .post(Endpoints.REGISTRANDO_USUARIO) // endpoint de criação
                 .then()
                 .statusCode(201) // valida que criou o usuário
                 .body("name", equalTo("morpheus")) // valida o campo name
