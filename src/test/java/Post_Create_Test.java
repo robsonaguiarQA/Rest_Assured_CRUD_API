@@ -15,21 +15,20 @@ public class Post_Create_Test extends BaseTest {
                 "}";
         Response response = RestAssured
                 .given()
-                .header("x-api-key", "reqres-free-v1") // header da API
+                .header("x-api-key", "reqres-free-v1")
                 .contentType("application/json")
                 .body(corpo)
                 .when()
-                .post(Endpoints.REGISTRANDO_USUARIO) // endpoint de criação
+                .post(Endpoints.REGISTRANDO_USUARIO)
                 .then()
-                .statusCode(201) // valida que criou o usuário
-                .body("name", equalTo("morpheus")) // valida o campo name
-                .body("job", equalTo("leader")) // valida o campo job
-                .body("id", notNullValue()) // garante que retornou um id
-                .body("createdAt", notNullValue()) // garante que retornou createdAt
+                .statusCode(201)
+                .body("name", equalTo("morpheus"))
+                .body("job", equalTo("leader"))
+                .body("id", notNullValue())
+                .body("createdAt", notNullValue())
                 .log().all()
                 .extract()
                 .response();
-        // Validações extras com JUnit (opcional)
         assertEquals("morpheus", response.jsonPath().getString("name"));
         assertEquals("leader", response.jsonPath().getString("job"));
     }

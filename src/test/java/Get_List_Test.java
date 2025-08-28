@@ -5,18 +5,18 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 
-public class Get_Lista_test extends BaseTest {
+public class Get_List_Test extends BaseTest {
 
     @Test
     public void deve_Listar_Todos_Usuarios() {
         Response response = RestAssured
                 .given()
-                .header("x-api-key", "reqres-free-v1") // header da API
+                .header("x-api-key", "reqres-free-v1")
                 .when()
                 .get(Endpoints.TODOS_USUARIO) // endpoint
                 .then()
-                .statusCode(200) // valida status 200
-                .log().all()     // log completo da resposta
+                .statusCode(200)
+                .log().all()
                 .extract()
                 .response();
         int qtdUsuarios = response.jsonPath().getList("data").size();
@@ -28,30 +28,28 @@ public class Get_Lista_test extends BaseTest {
     public void deve_Listar_Usuario_Especifico_Id() {
         Response response = RestAssured
                 .given()
-                .header("x-api-key", "reqres-free-v1") // header da API
+                .header("x-api-key", "reqres-free-v1")
                 .when()
-                .get(Endpoints.USUARIO_ID) // endpoint
+                .get(Endpoints.USUARIO_ID)
                 .then()
-                .statusCode(200) // valida status 200
-                .log().all()     // log completo da resposta
+                .statusCode(200)
+                .log().all()
                 .extract()
                 .response();
-        // 🔹 Valida se o email é exatamente o esperado
         String email = response.jsonPath().getString("data.email");
         assertEquals("Email incorreto!", "janet.weaver@reqres.in", email);
     }
-
 
     @Test
     public void deve_Listar_Usuario_Inexistente() {
         Response response = RestAssured
                 .given()
-                .header("x-api-key", "reqres-free-v1") // header da API
+                .header("x-api-key", "reqres-free-v1")
                 .when()
-                .get(Endpoints.USUARIO_INEXISTENTE) // endpoint
+                .get(Endpoints.USUARIO_INEXISTENTE)
                 .then()
-                .statusCode(404) // valida status 404
-                .log().all()     // log completo da resposta
+                .statusCode(404)
+                .log().all()
                 .extract()
                 .response();
         String body = response.getBody().asString();
@@ -62,16 +60,16 @@ public class Get_Lista_test extends BaseTest {
     public void deve_Listar_Recursos() {
         RestAssured
                 .given()
-                .header("x-api-key", "reqres-free-v1") // header da API
+                .header("x-api-key", "reqres-free-v1")
                 .when()
-                .get(Endpoints.RECURSOS) // endpoint
+                .get(Endpoints.RECURSOS)
                 .then()
-                .statusCode(200) // valida status 200
-                .body("page", equalTo(1)) // valida página
-                .body("total", equalTo(12)) // valida total
-                .body("data[0].name", equalTo("cerulean")) // valida nome do primeiro recurso
+                .statusCode(200)
+                .body("page", equalTo(1))
+                .body("total", equalTo(12))
+                .body("data[0].name", equalTo("cerulean"))
                 .body("data[1].id", equalTo(2))
-                .log().all()     // log completo da resposta
+                .log().all()
                 .extract()
                 .response();
     }
@@ -80,15 +78,15 @@ public class Get_Lista_test extends BaseTest {
     public void deve_Listar_Recursos_Especifico() {
         RestAssured
                 .given()
-                .header("x-api-key", "reqres-free-v1") // header da API
+                .header("x-api-key", "reqres-free-v1")
                 .when()
-                .get(Endpoints.RECURSO_ID) // endpoint
+                .get(Endpoints.RECURSO_ID)
                 .then()
                 .statusCode(200)
-                .body("data.id", equalTo(2)) // valida o ID
-                .body("data.name", equalTo("fuchsia rose")) // valida o nome
-                .body("data.year", equalTo(2001))// valida status 200
-                .log().all()     // log completo da resposta
+                .body("data.id", equalTo(2))
+                .body("data.name", equalTo("fuchsia rose"))
+                .body("data.year", equalTo(2001))
+                .log().all()
                 .extract()
                 .response();
     }

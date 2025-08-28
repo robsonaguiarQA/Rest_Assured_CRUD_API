@@ -18,13 +18,12 @@ public class Put_Update_Test extends BaseTest {
                 .header("Content-Type", "application/json")
                 .body(body)
                 .when()
-                .put(Endpoints.ATUALIZAR_USUARIO) // endpoint correto
+                .put(Endpoints.ATUALIZAR_USUARIO)
                 .then()
-                .statusCode(200) // valida status 200
+                .statusCode(200)
                 .log().all()
                 .extract()
                 .response();
-        // Validações
         assertEquals("morpheus", response.jsonPath().getString("name"));
         assertEquals("zion resident", response.jsonPath().getString("job"));
     }
@@ -39,7 +38,7 @@ public class Put_Update_Test extends BaseTest {
                 .header("x-api-key", "reqres-free-v1")
                 .body(body)
                 .when()
-                .patch("/api/users/2") // PATCH altera apenas parte do recurso
+                .patch(Endpoints.ATUALIZAR_USUARIO)
                 .then()
                 .statusCode(200)
                 .log().all()
