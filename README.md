@@ -1,5 +1,4 @@
 # Rest_Assured_CRUD_API
-
 Projeto de testes automatizados de APIs utilizando **RestAssured** e **JUnit**.
 
 API testada: [Reqres](https://reqres.in/)  
