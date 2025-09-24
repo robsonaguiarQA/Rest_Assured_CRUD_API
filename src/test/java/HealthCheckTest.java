@@ -1,3 +1,7 @@
+package health;
+
+import base.BaseTest;
+import endpoits.Endpoints;
 import io.restassured.RestAssured;
 import org.junit.Test;
 
