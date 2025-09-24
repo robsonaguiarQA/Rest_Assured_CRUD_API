@@ -1,3 +1,5 @@
+package endpoits;
+
 public class Endpoints {
     // Usuários
     public static final String TODOS_USUARIO = "api/users?page=2";

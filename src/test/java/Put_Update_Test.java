@@ -1,3 +1,7 @@
+package CRUDTest;
+
+import base.BaseTest;
+import endpoits.Endpoints;
 import io.restassured.response.Response;
 import org.junit.Test;
 
